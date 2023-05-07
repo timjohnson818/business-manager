@@ -21,7 +21,7 @@ function menuPrompt() {
                 },
                 {
                     name: 'View Departments',
-                    value: 'view_Departments'
+                    value: 'view_departments'
                 },
                 {
                     name: 'View Jobs',
@@ -83,8 +83,8 @@ function menuPrompt() {
             case 'add_job':
                 addJob();
                 break;
-            case 'update_roll':
-                updateRoll();
+            case 'update_role':
+                updateRole();
                 break;
             default:
                 quit();
@@ -119,7 +119,7 @@ function viewJobs(){
         console.log('\n');
         console.table(jobs);
     })
-    .then(() => menuPrompts());
+    .then(() => menuPrompt());
 }
 
 function addEmployee(){
@@ -166,20 +166,20 @@ function addEmployee(){
                                 type: "list",
                                 name: "managersID",
                                 message: "Whos is going to be the employee's manager?",
-                                choice: managers
+                                choices: managers
                             })
-                                then(res => {
-                                    let employee = {
+                                .then(res => {
+                                    let employeeguy = {
                                         manager_id: res.managersID,
                                         job_id: res.jobId,
                                         first_name: firstName, 
                                         last_name: lastName
                                     }
 
-                                    db.createEmployee(employee);
+                                    db.createEmployee(employeeguy)
+                                    .then(() => console.log(`${employee.first_name} ${employee.last_name} was added`))
+                                    .then(() => menuPrompt())
                                 })
-                                .then(() => console.log(`${firstName} ${lastName} was added`))
-                                .then(() => menuPrompt())
 
                         })
                 })
@@ -191,35 +191,35 @@ function addEmployee(){
 function addDepartment() {
     prompt([
         {
-            name:"dpt_name",
+            name:'department_name',
             message: "What is the name of the new department?"
         }
     ])
         .then(res => {
-            let deptName = res.dpt_name;
+            let deptName = res;
 
-            db.createDepartment(dpt_name)
-            .then(() => console.log(`Added ${dpt_name.dpt_name} to the database`))
+            db.createDepartment(deptName)
+            .then(() => console.log(`Added ${deptName.department_name} to the database`))
             .then(() => menuPrompt())
         })
 }
 
 function addJob() {
-    db.ViewAllDepartments()
+    db.viewAllDepartments()
     .then(([rows]) => {
       let departments = rows;
-      const departmentChoices = departments.map(({ id, name }) => ({
-        name: name,
+      const departmentChoices = departments.map(({ id, department_name }) => ({
+        name: department_name,
         value: id
       }));
 
       prompt([
         {
-          name: "title",
+          name: "job_title",
           message: "What is the name of the job?"
         },
         {
-          name: "salary",
+          name: "pay",
           message: "What is the job's salary?"
         },
         {
@@ -230,9 +230,9 @@ function addJob() {
         }
       ])
         .then(role => {
-          db.createRole(role)
-            .then(() => console.log(`Added ${role.title} to the database`))
-            .then(() => loadMainPrompts())
+          db.createJob(role)
+            .then(() => console.log(`Added ${role.job_title} to the database`))
+            .then(() => menuPrompt())
         })
     })
 }

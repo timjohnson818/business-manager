@@ -1,11 +1,11 @@
-DROP database IF EXISTS busniess;
+DROP database IF EXISTS business;
 CREATE DATABASE business;
 
 USE business;
 
 CREATE TABLE department (
-    id INT AUTO_INCREMENT PRIMARY KEY
-    name VARCHAR(30) NOT NULL UNIQUE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    department_name VARCHAR(30) NOT NULL UNIQUE
 );
 
 CREATE TABLE job (
@@ -14,7 +14,7 @@ CREATE TABLE job (
     job_title VARCHAR(30) NOT NULL UNIQUE,
     department_id INT,
     FOREIGN KEY (department_id) REFERENCES department(id)
-    CONSTRAINT ON DELETE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE employee (
@@ -23,7 +23,7 @@ CREATE TABLE employee (
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     manager_id INT,
-    FOREIGN KEY (job_id) REFERENCES job(id),
-    FOREIGN KEY (manager_id) REFERENCES eployee(id),
-    CONSTRAINT ON DELETE CASCADE
+    FOREIGN KEY (job_id) REFERENCES job(id) ON DELETE CASCADE,
+    FOREIGN KEY (manager_id) REFERENCES employee(id)
+    ON DELETE CASCADE
 );

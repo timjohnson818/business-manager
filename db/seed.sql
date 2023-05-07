@@ -1,7 +1,7 @@
 use business;
 
 INSERT INTO department
-    (name)
+    (department_name)
 VALUES
     ('Human Resources'),
     ('Sales'),
@@ -18,16 +18,16 @@ VALUES
     ('Accountant', 120000, 3),
     ('Accounting Manager', 150000, 3),
     ('Product Developer', 100000, 4),
-    ('Product Manager', 140000, 4),
+    ('Product Manager', 140000, 4);
 
 INSERT INTO employee
     (last_name, first_name, job_id, manager_id)
 VALUES
-    ('Johns', 'Jimmy', 1, 2),
-    ('McDonald', 'Ronald', 2, NULL),
-    ('King', 'Burger', 3, 4),
-    ('Jersey', 'Mike', 4, NULL),
-    ('Cane', 'Raising', 5, 6),
-    ('Bellium', 'Taco', 6, NULL),
-    ('Queen', 'Dairy', 7, 8),
-    ('Eye', 'Pop', 8, NULL);
+    ('Johns', 'Jimmy', 1, NULL),
+    ('McDonald', 'Ronald', 2, 1),
+    ('King', 'Burger', 3, NULL),
+    ('Jersey', 'Mike', 4, 3),
+    ('Cane', 'Raising', 5, NULL),
+    ('Bellium', 'Taco', 6, 5),
+    ('Queen', 'Dairy', 7, NULL),
+    ('Eye', 'Pop', 8, 7);
